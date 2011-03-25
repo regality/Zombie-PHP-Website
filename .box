@@ -1,0 +1,97 @@
+general:
+    # network shared directories that every
+    # node has access to in real time.
+    # 
+    # CAUTION: these should be used sparingly!
+    # You should only use these for upload content
+    # or possible as a central cache store.
+    # 
+    # WARNING: Once you specify a directory here,
+    # deploys will only copy new files into these
+    # directories. The file contents will no longer
+    # be tracked via git on the Pagoda side.
+    writable_directories: [/dirA, /dirB]
+    
+web:
+    # The root of your executable app source.
+    # For instance, if you like to house your app
+    # in /app for security or organizational
+    # purposes, you can specify that here.
+    # All further configurations will be relative
+    # to this directory. Default is the root of 
+    # you project.
+    document_root: /web
+    
+    # When a path is not specified in the url
+    # which file would you like to serve, 
+    # in order from left to right until one
+    # of the files exist in the requested
+    # directory .
+    index_list: [index.php, index.html]
+    
+    # When a url contains a path that is not
+    # matched on the file system (ie: /product/13)
+    # which file would you like us to push the
+    # request through. This is often refered to 
+    # as the bootfile or boilerplate.
+    default_gateway: index.php
+    
+    # Lyon what is this?
+    locations: []
+    
+    # When an error is encountered in the request
+    # cycle, we can route the request to a different
+    # path or url if you'd like. 
+    # 
+    # The format is as follows:
+    # error_number: new_path
+    error_pages: 
+        404: /404.html
+    
+php:
+    
+    # The version of php to load into your secure
+    # executable container. Defaults to newest.
+    version: 5.3.5
+    
+    # By default, your php executable is extremely
+    # slim, and only contains the core interpreter.
+    # All additional extensions will be loaded when
+    # we spawn your executable processes. You can
+    # specify them simply as a comma delimited list
+    # To see a list of all available extensions 
+    # check this link: /link/to/extensions
+    extensions: [eaccelerator, mysql]
+    
+    # http://www.php.net/manual/en/errorfunc.configuration.php#ini.error-reporting
+    error_reporting: 'E_ALL'
+    
+    # http://www.php.net/manual/en/errorfunc.configuration.php#ini.display-errors
+    display_errors: On
+    
+    # http://php.net/manual/en/ini.core.php
+    short_open_tag: On
+    
+    # http://php.net/manual/en/ini.core.php
+    default_mimetype: text/html
+    
+    # http://php.net/manual/en/ini.core.php
+    date_timezone: US/central
+    
+    # http://php.net/manual/en/ini.core.php
+    max_execution_time: 30
+    
+    # http://php.net/manual/en/ini.core.php
+    max_input_time: 60
+    
+    # http://php.net/manual/en/ini.core.php
+    post_max_size: 8M
+    
+    # http://php.net/manual/en/ini.core.php
+    file_uploads: On
+    
+    # http://php.net/manual/en/ini.core.php
+    upload_max_filesize: 2M
+    
+    # http://php.net/manual/en/ini.core.php
+    max_file_uploads: 20
