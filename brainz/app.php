@@ -19,6 +19,9 @@ abstract class App {
          require_once($db_file);
          $this->sql = new $db_class($db_server, $db_user,
                                     $db_pass, $database);
+         if (!$this->sql->is_connected()) {
+            echo "ERROR: Could not connect to database";
+         }
       }
       if ($sess == null) {
          // Set up session
