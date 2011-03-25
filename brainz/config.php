@@ -7,7 +7,7 @@ $domain = 'zombiephp.com';
 
 $db_class = 'MySqlConnection';
 $db_file = 'sql/mysql_connection.php';
-$db_server = 'localhost';
+$db_server = 'localhost:/tmp/mysql/annamarie.sock';
 $db_user = 'denese';
 $db_pass = 'yfSLiEad';
 $database = 'annamarie';
