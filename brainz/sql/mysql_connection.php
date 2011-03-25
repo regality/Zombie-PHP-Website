@@ -15,8 +15,12 @@ class MySqlConnection extends SqlConnection {
     public function __destruct() {
     }
 
-    public function selectDb($database) {
+    public function select_db($database) {
         mysql_select_db($database, $this->db);
+    }
+
+    public function is_connected() {
+        return (boolean) $this->db;
     }
 
     public function exec($query, $params = array(), $html_safe = true, $debug = false) {
