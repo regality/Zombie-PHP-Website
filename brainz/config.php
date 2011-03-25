@@ -1,7 +1,7 @@
 <?php
 
-$zombie_root = '/var/Zombie-PHP';
-$app_root = '/var/Zombie-PHP/apps';
+$zombie_root = '/';
+$app_root = '/apps';
 $web_root = '';
 $domain = 'zombiephp.com';
 
