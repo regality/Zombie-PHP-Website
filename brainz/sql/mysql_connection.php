@@ -3,24 +3,24 @@
 require("sql_connection.php");
 
 class MySqlConnection extends SqlConnection {
-    private $db = false;
-    private $errors = "";
+    public static $db = false;
+    public static $errors = "";
 
     public function __construct($server, $username, $password, $database) {
-        $this->db = mysql_connect($server, $username, $password);
-        mysql_select_db($database, $this->db);
-        return $this->db;
+        MySqlConnection::$db = mysql_pconnect($server, $username, $password);
+        mysql_select_db($database, MySqlConnection::$db);
+        return MySqlConnection::$db;
     }
 
     public function __destruct() {
     }
 
     public function select_db($database) {
-        mysql_select_db($database, $this->db);
+        mysql_select_db($database, MySqlConnection::$db);
     }
 
     public function is_connected() {
-        return (boolean) $this->db;
+        return (boolean) MySqlConnection::$db;
     }
 
     public function exec($query, $params = array(), $html_safe = true, $debug = false) {
@@ -47,14 +47,14 @@ class MySqlConnection extends SqlConnection {
                echo "<pre>" . $p_query . "</pre>";
             }
             // Process the request.
-            $result = mysql_query($p_query, $this->db);
+            $result = mysql_query($p_query, MySqlConnection::$db);
 
             // Check for errors.
             $my_error = mysql_error();
 
             // If there are errors, put them in the error list
             if (strlen($my_error) > 0) {
-                $this->errors .= $my_error;
+                MySqlConnection::$errors .= $my_error;
                 return false;
             } else {
                 return new MySqlResult($result);
@@ -63,7 +63,7 @@ class MySqlConnection extends SqlConnection {
     }
 
    public function get_errors() {
-      return $this->errors;
+      return MySqlConnection::$errors;
    }
 
    public function begin() {

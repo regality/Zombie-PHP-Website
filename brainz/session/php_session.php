@@ -2,13 +2,21 @@
 require("session.php");
 
 class PhpSession extends Session {
+   public static $instance;
 
    public function __construct() {
       if (!isset($_SESSION)) {
-         require(dirname(__FILE__) . "/../config.php");
+         require(__DIR__ . "/../config.php");
          session_set_cookie_params('3600', '/' . $web_root, $domain, false, true);
          session_start();
       }
+   }
+
+   public static function get_session() {
+      if (!isset(PhpSession::$instance)) {
+         PhpSession::$instance = new PhpSession();
+      }
+      return PhpSession::$instance;
    }
 
    public function save() {
