@@ -68,7 +68,7 @@ class SqlSession extends Session {
    }
 
    public function create() {
-      $this->session_id = sha1(time() + rand(1,10000000));
+      $this->session_id = md5(time() . rand() . rand());
       setcookie('s',
                 $this->session_id,
                 time() + 60*30,
@@ -89,7 +89,11 @@ class SqlSession extends Session {
    }
 
    public function get($key) {
-      return $this->session[$key];
+      if (isset($this->session[$key])) {
+         return $this->session[$key];
+      } else {
+         return false;
+      }
    }
 
    public function is_set($key) {
@@ -103,7 +107,6 @@ class SqlSession extends Session {
       $this->session = array();
       $this->create();
    }
-
 }
 
 ?>

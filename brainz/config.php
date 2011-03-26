@@ -21,7 +21,7 @@ if ($domain == 'zombie-php.pagodabox.com') {
 
 $db_class = 'MySqlConnection';
 $db_file = 'sql/mysql_connection.php';
-$sess_file = 'session/php_session.php';
-$sess_class = 'PhpSession';
+$sess_file = 'session/sql_session.php';
+$sess_class = 'SqlSession';
 
 ?>

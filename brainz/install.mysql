@@ -1,6 +1,3 @@
-CREATE DATABASE zombie;
-USE zombie;
-
 CREATE TABLE groups (
     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) UNIQUE
@@ -13,6 +10,12 @@ CREATE TABLE users (
     lastname VARCHAR(100),
     password CHAR(40) NOT NULL,
     groups VARCHAR(1024)
+);
+
+CREATE TABLE session {
+   id char(40) NOT NULL PRIMARY KEY,
+   data varchar(8192),
+   last_access DATETIME
 );
 
 INSERT INTO users VALUES (
