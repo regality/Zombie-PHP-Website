@@ -17,22 +17,14 @@ height: 100%;
 body {
 font: 80.5% "Trebuchet MS", sans-serif;
 cursor:default;
-background: #333;
-color: white;
+background: white;
+color: black;
 height: 100%;
 }
 
-a {
-color: #777;
-}
 
-a:visited {
-color: #557;
-}
 
-a:hover {
-color: #755;
-}
+
 
 table {
 border-collapse: collapse;
@@ -50,6 +42,7 @@ table tr td {
 border-bottom: 1px solid white;
 padding: 4px 10px;
 background-color: #e8edff;
+color: black;
 }
 
 .demoHeaders { margin-top: 2em; }
@@ -85,12 +78,8 @@ height: 90px;
 display: inline-block;
 }
 
-#wrapper {
-width: 1000px;
-height: 100%;
-}
-
 #main {
+width: 1000px;
 position: absolute;
 height: 100%;
 }
@@ -100,38 +89,36 @@ width: 200px;
 min-height: 100%;
 padding-left: 100px;
 padding-top: 100px;
-background: #111;
+background: #b9d1ff;
 }
 
-h2.menu {
-font-family: 'Orbitron';
-}
-
-.item {
+a.item {
+text-decoration: none;
+display: block;
 width: 170px;
 height: 15px;
 margin: 0px 10px;
 padding: 10px 5px;
-color: #666;
+color: black;
 font-family: 'Orbitron';
 }
 
-.item:hover {
+.menu-title {
+margin-left: 10px;
+height: 50px;
+font-family: 'Orbitron';
+color: #f60;
+}
+
+a.item:hover {
 color: white;
 }
 
-.item.prev, .item.last {
-border-bottom: none;
-}
-
-.item.next {
-border-top: none;
-}
-
-.item.active {
+a.item.active {
 text-align: right;
-background: #333;
+background: white;
 color: #f60;
+font-weight: bold;
 }
 
 #content {
@@ -252,7 +239,6 @@ border-top-width: 0px;
 background-color: #eee;
 width: 80%;
 text-align: left;
-margin: 0px auto;
 padding: 2px;
 }
 
@@ -276,22 +262,12 @@ font-family: "Courier";
 color: #aaa;
 }
 
-.blurb {
-font-size: 18px;
-font-weight: bold;
-color: white;
-border: 2px solid #dd7500;
-border-top: none;
-padding: 10px;
-}
-
 h2 {
 display: block;
 color: #dd7500;
 }
 
 h3 {
-color: white;
-font-weight: bold;
+color: black;
 text-transform: uppercase;
 }

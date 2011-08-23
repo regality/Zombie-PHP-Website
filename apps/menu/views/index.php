@@ -1,11 +1,14 @@
-<h2 class="menu"><?= $title ?></h2>
-<?php foreach ($apps as $app): ?>
-   <div class="item app <?= (isset($app['class']) ? $app['class'] : '') ?>" app="<?= $app['app'] ?>">
-      <?= $app['name'] ?>
-   </div>
+<div class="menu-title">
+   <h2><?= $title ?></h2>
+</div>
+
+<?php foreach ($apps as $app => $settings): ?>
+   <?php $active = ($preload == $app ? 'active' : '') ?>
+   <a href="#/<?= $app ?>" class="item <?= $active ?>"><?= $settings['name'] ?></a>
 <?php endforeach ?>
+
 <?php if ($session->is_set("username")): ?>
-   <div class="item app" id="logout">
+   <a class="item" id="logout">
       Logout
-   </div>
+   </a>
 <?php endif ?>

@@ -1,10 +1,7 @@
 $(document).ready(function() {
    setAjaxUrl();
    undead.setupAjax();
-   undead.resetMenu();
-   if (typeof $(".active").attr("app") != "undefined") {
-      undead.pushStack($(".active").attr("app"));
-   }
+   undead.loadDefaultApp();
 
    $("#console-clear").click(function() {
       $("#console-messages").html("");
@@ -14,16 +11,29 @@ $(document).ready(function() {
       $(this).parent().remove();
    });
 
-   $(".app").live('click', function() {
-      var app = $(this).attr("app");
+   $(".item").live('click', function() {
       if (!$(this).hasClass("active")) {
          $(".item").removeClass("active");
-         $(".item[app=" + app + "]").addClass("active");
+         $(this).addClass("active");
       }
-      if (undead.stackSize(app) == 0) {
-         undead.pushStack(app);
-      } else {
-         undead.focusApp(app);
+   });
+
+   $("a").live('click', function(e) {
+      var href = $(this).attr("href");
+      var re = href.match(/^\/?#\/([a-z_]+)\/?([a-z_]+)?$/);
+      if (re != null) {
+         e.preventDefault();
+         var app = re[1];
+         if (re[2] == null) {
+            if (undead.stackSize(app) == 0) {
+               undead.pushStack(app);
+            } else {
+               undead.focusApp(app);
+            }
+         } else {
+            var action = re[2];
+            undead.pushStack(app, action);
+         }
       }
    });
 

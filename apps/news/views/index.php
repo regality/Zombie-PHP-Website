@@ -1,3 +1,4 @@
 <div class="welcome">
-news page
+<h2>News</h2>
+Nothing yet.
 </div>

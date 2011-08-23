@@ -6,23 +6,23 @@ class Menu extends App {
       if ($this->session->is_set('username')) {
          $this->title = "Welcome, " . $this->session->get('username');
       } else {
-         $this->title = "";
+         $this->title = "Menu";
       }
 
-      $this->apps = array(
-         array("app" => "welcome", "name" => "Home", "class" => "active"),
-         array("app" => "tutorials", "name" => "Tutorials"),
-         array("app" => "download", "name" => "Download"),
-         array("app" => "news", "name" => "News"),
-         array("app" => "docs", "name" => "Documentation"),
-         array("app" => "contribute", "name" => "Contribute"),
-         array("app" => "contact", "name" => "Contact")
-      );
+      $this->apps['welcome'] = array("name" => "Home");
+      $this->apps['tutorials'] = array("name" => "Tutorials");
+      $this->apps['download'] = array("name" => "Download");
+      $this->apps['docs'] = array("name" => "Documentation");
+      $this->apps['news'] = array("name" => "News");
+      $this->apps['contribute'] = array("name" => "Contribute");
+      $this->apps['contact'] = array("name" => "Contact");
       if ($this->in_group('admin')) {
-         array_push($this->apps, array("app" => "users", "name" => "Users"));
-         array_push($this->apps, array("app" => "groups", "name" => "Groups"));
-         array_push($this->apps, array("app" => "console", "name" => "Console"));
+         $this->apps['users'] = array("name" => "Users");
+         $this->apps['groups'] = array("name" => "Groups");
+         $this->apps['console'] = array("name" => "Console");
       }
+      $this->preload = (isset($request['default_app']) ? $request['default_app'] : "welcome");
+      $this->preload_action = (isset($request['default_action']) ? $request['default_action'] : "index");
    }
 }
 

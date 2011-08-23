@@ -1,3 +1,4 @@
 <div class="welcome">
-docs page
+<h2>Documentation</h2>
+Will be coming soon!
 </div>
