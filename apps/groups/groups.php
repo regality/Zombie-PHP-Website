@@ -1,95 +1,70 @@
 <?php
-require_once(__DIR__ . " /../../brainz/app.php");
+require_once(dirname(__FILE__) . "/../../brainz/app/secure_app.php");
 
-class Groups extends App {
-   public function execute($action, $request) {
-      $id = (isset($request['id']) ? $request['id'] : null);
-      if ($action != 'new') {
-         $this->get_groups($id, $request);
-      }
-      $this->get_other_tables();
+class Groups extends SecureApp {
 
-      if ($action == 'edit') {
-         if ($this->groups->num_rows() == 0) {
-            echo "ERROR: item not found";
-            return;
-         } else {
-            $this->groups = $this->groups->fetch_one();
-         }
-      }
+   /*********************************************
+    * run functions
+    *********************************************/
 
-      if ($action == 'edit' || $action == 'new') {
-         $this->form_action = ($action == 'new' ? 'create' : 'update');
-         $this->render('groups/edit.php');
-      } else if ($action == '') {
-         $this->render('groups/view.php');
+   public function index_run($request) {
+      $groups_model = $this->get_model("groups");
+      $this->groups = $groups_model->get_all();
+   }
+
+   public function edit_run($request) {
+
+      $groups_model = $this->get_model("groups");
+      $this->groups = $groups_model->get_one($request['id']);
+      $this->form_action = 'update';
+   }
+
+   public function new_run($request) {
+
+      $this->view = 'edit';
+      $this->form_action = 'create';
+   }
+
+   public function update_run($request) {
+   }
+
+   public function delete_run($request) {
+   }
+
+   public function create_run($request) {
+   }
+
+   /*********************************************
+    * save functions
+    *********************************************/
+
+   public function create_save($request) {
+      $groups_model = $this->get_model("groups");
+      if ($groups_model->insert($request)) {
+         $this->json['status'] = "success";
       } else {
-         $this->render_json();
+         $this->json['status'] = "failed";
       }
    }
 
-   public function save($action, $request) {
-      if ($action == 'create') {
-         $query = 'INSERT into groups
-                     ( id
-                     , name
-                   )
-                   VALUES
-                     (DEFAULT, $1)';
-
-         $params = array();
-         $params[] = $request['name'];
-
-         if ($this->sql->exec($query, $params)) {
-            $this->json['status'] = "success";
-         } else {
-            $this->json['status'] = "failed";
-         }
-      } else if ($action == 'update') {
-         $query = 'UPDATE groups SET
-                       name = $2 
-                   WHERE id = $1';
-         $params = array();
-         $params[] = $request['id'];
-
-         $params[] = $request['name'];
-
-         if ($this->sql->exec($query, $params)) {
-            $this->json['status'] = "success";
-         } else {
-            $this->json['status'] = "failed";
-         }
-      } else if ($action == 'delete') {
-         $query = 'DELETE FROM groups WHERE id = $1';
-         $params = array($request['id']);
-         if ($this->sql->exec($query, $params)) {
-            $this->json['status'] = "success";
-         } else {
-            $this->json['status'] = "failed";
-         }
+   public function update_save($request) {
+      $groups_model = $this->get_model("groups");
+      if ($groups_model->update($request['id'], $request)) {
+         $this->json['status'] = "success";
+      } else {
+         $this->json['status'] = "failed";
       }
    }
 
-   public function get_groups($id, $request) {
-      $select = 'SELECT groups.id
-                      , groups.name
-                 FROM groups';
-
-      $join = '';
-
-      $where = '';
-      $params = array();
-      if (!is_null($id)) {
-         $where = " WHERE groups.id = $1";
-         $params[] = $request['id'];
+   public function delete_save($request) {
+      $groups_model = $this->get_model("groups");
+      if ($groups_model->delete($request['id'])) {
+         $this->json['status'] = "success";
+      } else {
+         $this->json['status'] = "failed";
       }
-      $query = $select . $join . $where;
-      $this->groups = $this->sql->exec($query, $params);
    }
 
-   public function get_other_tables() {
-
-   }
 }
 
 ?>

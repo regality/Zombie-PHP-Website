@@ -8,7 +8,7 @@ class MySqlConnection extends SqlConnection {
 
    public function __construct($server, $username, $password, $database) {
       if (!$this->is_connected()) {
-         MySqlConnection::$db = mysql_connect($server, $username, $password);
+         MySqlConnection::$db = mysql_pconnect($server, $username, $password);
          mysql_select_db($database, MySqlConnection::$db);
       }
       return MySqlConnection::$db;
@@ -61,6 +61,7 @@ class MySqlConnection extends SqlConnection {
          // If there are errors, put them in the error list
          if (strlen($my_error) > 0) {
              $this->errors .= $my_error;
+             trigger_error("Mysql Error: " . $my_error, E_USER_WARNING);
              return false;
          } else {
              return new MySqlResult($result);

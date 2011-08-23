@@ -4,8 +4,6 @@ require("session.php");
 
 class SqlSession extends Session {
    private static $instance;
-   public $session;
-   public $session_id;
    public $sql;
    public $state;
 
@@ -18,8 +16,8 @@ class SqlSession extends Session {
 
    public function __construct() {
       require(dirname(__FILE__) . "/../config.php");
-      require_once(dirname(__FILE__) . "/../" . $db_file);
-      $this->sql = new $db_class($db_server, $db_user, $db_pass, $database);
+      require_once($db_file);
+      $this->sql = new $db_class($db_host, $db_user, $db_pass, $database);
       $this->clear_old();
       $this->session = false;
       if (isset($_COOKIE['s'])) {
@@ -43,8 +41,13 @@ class SqlSession extends Session {
       $this->save();
    }
 
+   public function get_array() {
+      return $this->session;
+   }
+
    public function clear_old() {
-      $query = "DELETE FROM session WHERE DATE_ADD(last_access, INTERVAL 1 HOUR) < now()";
+      //$query = "DELETE FROM session WHERE DATE_ADD(last_access, INTERVAL 1 HOUR) < now()";
+      $query = "DELETE FROM session WHERE last_access < DATE_SUB(NOW(), INTERVAL 10 HOUR)";
       $this->sql->exec($query);
    }
 
@@ -73,7 +76,7 @@ class SqlSession extends Session {
                 $this->session_id,
                 time() + 60*30,
                 '/',
-                $_SERVER['NAME'],
+                $_SERVER['SERVER_NAME'],
                 false,
                 true);
       $this->state = 'new';

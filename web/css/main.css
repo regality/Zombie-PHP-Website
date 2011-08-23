@@ -1,11 +1,37 @@
+@font-face {
+font-family: 'Orbitron';
+font-style: normal;
+font-weight: normal;
+src: local('Orbitron'), url('/css/Orbitron.woff') format('woff');
+}
+
 * {
 padding: 0px;
 margin: 0px;
 }
 
+html {
+height: 100%;
+}
+
 body {
 font: 80.5% "Trebuchet MS", sans-serif;
 cursor:default;
+background: #333;
+color: white;
+height: 100%;
+}
+
+a {
+color: #777;
+}
+
+a:visited {
+color: #557;
+}
+
+a:hover {
+color: #755;
 }
 
 table {
@@ -14,14 +40,18 @@ border-collapse: collapse;
 
 table tr th {
 padding: 1px 10px;
+border-bottom: 1px solid white;
+background-color: #b9c9fe;
+color: #001f6b;
+font-weight:normal;
 }
 
 table tr td {
-border: 1px solid #aaa;
-padding: 2px;
+border-bottom: 1px solid white;
+padding: 4px 10px;
+background-color: #e8edff;
 }
 
-/* jqueyr ui stuff */
 .demoHeaders { margin-top: 2em; }
 #dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
 #dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
@@ -30,58 +60,64 @@ ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; f
 ul#icons span.ui-icon {float: left; margin: 0 4px;}
 
 #header {
-width: 800px;
-text-align: center;
+position: absolute;
+top: 0px;
+left: 300px;
+width: 550px;
 margin: 0px auto;
 height: 90px;
-padding: 5px;
+padding: 15px;
 padding-bottom: 0px;
 }
 
 #header h1 {
-font-family: 'Slackey', 'Arial';
+font-family: 'Orbitron', 'Arial';
 font-size: 58px;
+display: inline-block;
+padding-top: 20px;
+color: #f60;
 position: relative;
 top: -20px;
-display: inline-block;
 }
 
 #header img {
-   height: 90px;
+height: 90px;
+display: inline-block;
 }
 
 #wrapper {
-width: 800px;
-margin: 0px auto;
-height: 601px;
-border-top: 1px solid #2955a6;
-border-left: 1px solid #2955a6;
+width: 1000px;
+height: 100%;
 }
 
 #main {
 position: absolute;
+height: 100%;
 }
 
 #sidenav {
 width: 200px;
-height: 600px;
-border-bottom: 1px solid #2955a6;
-border-right: 1px solid #2955a6;
-background: #b9d1ff;
+min-height: 100%;
+padding-left: 100px;
+padding-top: 100px;
+background: #111;
+}
+
+h2.menu {
+font-family: 'Orbitron';
 }
 
 .item {
 width: 170px;
-height: 20px;
+height: 15px;
 margin: 0px 10px;
-padding: 15px 5px;
-border-bottom: 1px solid #9fc1ff;
-border-top: 1px solid #ddf;
-text-align: center;
+padding: 10px 5px;
+color: #666;
+font-family: 'Orbitron';
 }
 
-.app {
-color: #000;
+.item:hover {
+color: white;
 }
 
 .item.prev, .item.last {
@@ -92,35 +128,18 @@ border-bottom: none;
 border-top: none;
 }
 
-.app:hover {
-color: #000;
-}
-
-.app.active {
-position: relative;
-left: -20px;
-width: 200px;
-height: 22px;
-border: 1px solid #2955a6;
-border-right: none;
-background: white;
-border-bottom-left-radius: 5px;
-border-top-left-radius: 5px;
--moz-border-radius-bottomleft: 5px;
--moz-border-radius-topleft: 5px;
-padding-top: 16px;
-padding-bottom: 14px;
-padding-left: 9px;
-padding-right: 1px;
+.item.active {
+text-align: right;
+background: #333;
+color: #f60;
 }
 
 #content {
 position: absolute;
-top: 20px;
-left: 200px;
-width: 600px;
-text-align: center;
-padding: 5px 20px;
+top: 100px;
+left: 300px;
+width: 550px;
+padding: 15px 20px;
 }
 
 #login {
@@ -213,6 +232,9 @@ height: 30px;
 width: 30px;
 background-image: url('/images/close-button.png');
 float: right;
+position: relative;
+top: -20px;
+left: 20px;
 }
 
 .basic-ajax {
@@ -252,4 +274,24 @@ font-family: "Courier";
 
 .console-mesg-close:hover {
 color: #aaa;
+}
+
+.blurb {
+font-size: 18px;
+font-weight: bold;
+color: white;
+border: 2px solid #dd7500;
+border-top: none;
+padding: 10px;
+}
+
+h2 {
+display: block;
+color: #dd7500;
+}
+
+h3 {
+color: white;
+font-weight: bold;
+text-transform: uppercase;
 }
