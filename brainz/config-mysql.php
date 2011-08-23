@@ -24,6 +24,6 @@ if ($domain == 'zombie-php.pagodabox.com') {
 }
 
 $db_class = 'MySqlConnection';
-$db_file = 'sql/mysql_connection.php';
+$db_file = $zombie_root . '/brainz/sql/mysql_connection.php';
 
 ?>
