@@ -1,9 +1,22 @@
 web:
     document_root: /web
-    index_list: [index.php, index.html]
+    index_list: [index.php]
+
 php:
     version: 5.3.5
     extensions: [eaccelerator, mysql]
     error_reporting: 'E_ALL'
     display_errors: On
     short_open_tag: On
+
+url_rewrites:
+    -
+        rule: "^/([a-z_]+)$ /index.php?action=$1&$query_string last"
+        conditions:
+            - "!-f $request_filename"
+            - "!-d $request_filename"
+    -
+        rule: "^/([a-z_]+)/([a-z_]+)$ /index.php?action=$1&preload_action=$2&$query_string last"
+        conditions:
+            - "!-f $request_filename"
+            - "!-d $request_filename"

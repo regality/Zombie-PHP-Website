@@ -1,4 +1,4 @@
-<a href="#" id="<SLUG>-new">New +</a>
+<a href="/<SLUG>/new" id="<SLUG>-new">New +</a>
 <table>
    <tr>
 <HTML_FIELDS_TH>
@@ -8,18 +8,13 @@
    <?php foreach ($<SLUG> as $row): ?>
    <tr>
 <HTML_FIELDS_TD>
-      <td><a class="<SLUG>-edit" href="#" <SLUG>_id="<?= $row['id'] ?>">edit</a></td>
+      <td><a href="/<SLUG>/edit?id=<?= $row['id'] ?>">edit</a></td>
       <td><a class="<SLUG>-delete" href="#" <SLUG>_id="<?= $row['id'] ?>">delete</a></td>
    </tr>
    <?php endforeach ?>
 </table>
 <script type="text/javascript">
 $(document).ready(function() {
-   $(".<SLUG>-edit").click(function(e) {
-      e.preventDefault();
-      undead.pushStack("<SLUG>", "edit", {"id":$(this).attr("<SLUG>_id")});
-   });
-
    $(".<SLUG>-delete").click(function(e) {
       e.preventDefault();
       $row = $(this).parents("tr");
@@ -32,14 +27,9 @@ $(document).ready(function() {
       });
    });
 
-   $("#<SLUG>-new").click(function(e) {
-      e.preventDefault();
-      undead.pushStack("<SLUG>","new");
-   });
-
    $(".<SLUG>-create").die('click').live('click', function() {
       $form = $(this).parents("div.form");
-      if (!undead.verify_form($form)) {
+      if (!undead.ui.verifyForm($form)) {
          alert("Some required fields are msising.");
          return;
       }
@@ -48,15 +38,15 @@ $(document).ready(function() {
 <AJAX_COMMA_SEP_FIELDS>
                       "action":"create"},
               "success":function(data) {
-                  undead.popStack("<SLUG>");
-                  undead.refreshStack("<SLUG>");
+                  undead.stack.push("<SLUG>");
+                  undead.stack.refresh("<SLUG>");
               }
       });
    });
 
    $(".<SLUG>-update").die('click').live('click', function() {
       $form = $(this).parents("div.form");
-      if (!undead.verify_form($form)) {
+      if (!undead.ui.verifyForm($form)) {
          alert("Some required fields are msising.");
          return;
       }
@@ -65,8 +55,8 @@ $(document).ready(function() {
 <AJAX_COMMA_SEP_FIELDS_WID>
                       "action":"update"},
               "success":function(data) {
-                  undead.popStack("<SLUG>");
-                  undead.refreshStack("<SLUG>");
+                  undead.stack.pop("<SLUG>");
+                  undead.stack.refresh("<SLUG>");
               }
       });
    });

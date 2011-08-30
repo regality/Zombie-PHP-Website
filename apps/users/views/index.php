@@ -1,13 +1,12 @@
 <div class="modal content-modal" id="users-modal">
    <div id="users-ajax" class="awesome basic-ajax"></div>
 </div>
-<a href="#" id="users-new">New +</a>
+<a href="/users/new" id="users-new">New +</a>
 <table>
    <tr>
       <th>Username</th>
       <th>Firstname</th>
       <th>Lastname</th>
-      <th>Groups</th>
       <th></th>
       <th></th>
    </tr>
@@ -16,7 +15,6 @@
       <td><?= $row['username'] ?></td>
       <td><?= $row['firstname'] ?></td>
       <td><?= $row['lastname'] ?></td>
-      <td><?= implode(',', unserialize($row['groups'])); ?></td>
       <td><a class="users-edit" href="#" users_id="<?= $row['id'] ?>">edit</a></td>
       <td><a class="users-delete" href="#" users_id="<?= $row['id'] ?>">delete</a></td>
    </tr>
@@ -27,7 +25,7 @@
 $(document).ready(function() {
    $(".users-edit").click(function(e) {
       e.preventDefault();
-      undead.pushStack("users", "edit", {"id":$(this).attr("users_id")});
+      undead.stack.push("users", "edit", {"id":$(this).attr("users_id")});
    });
 
    $(".users-delete").click(function(e) {
@@ -42,14 +40,9 @@ $(document).ready(function() {
       });
    });
 
-   $("#users-new").click(function(e) {
-      e.preventDefault();
-      undead.pushStack("users","new");
-   });
-
    $(".users-create").die('click').live('click', function() {
       $form = $(this).parents("div.form");
-      if (!undead.verify_form($form)) {
+      if (!undead.ui.verifyForm($form)) {
          alert("Some required fields are msising.");
          return;
       }
@@ -67,7 +60,7 @@ $(document).ready(function() {
          alert('Passwords do not match');
          retun;
       }
-      hex_pass = hex_sha1(pw1);
+      hex_pass = undead.crypt.hash(pw1);
       $.ajax({"url":"app.php",
               "data":{"app":"users",
                       "id":$form.find("input[name=id]").val(),
@@ -78,15 +71,15 @@ $(document).ready(function() {
                       "groups":groups,
                       "action":"create"},
               "success":function(data) {
-                  undead.popStack("users");
-                  undead.refreshStack("users");
+                  undead.stack.pop("users");
+                  undead.stack.refresh("users");
               }
       });
    });
 
    $(".users-update").die('click').live('click', function() {
       $form = $(this).parents("div.form");
-      if (!undead.verify_form($form)) {
+      if (!undead.ui.verifyForm($form)) {
          alert("Some required fields are msising.");
          return;
       }
@@ -108,8 +101,8 @@ $(document).ready(function() {
                       "action":"update"},
               "success":function(data) {
                   $("#users-modal").fadeOut();
-                  undead.popStack("users");
-                  undead.refreshStack("users");
+                  undead.stack.pop("users");
+                  undead.stack.refresh("users");
               }
       });
    });

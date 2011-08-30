@@ -1,7 +1,7 @@
 $(document).ready(function() {
    setAjaxUrl();
-   undead.setupAjax();
-   undead.loadDefaultApp();
+   undead.init.setupAjax();
+   undead.stack.loadDefault();
 
    $("#console-clear").click(function() {
       $("#console-messages").html("");
@@ -20,28 +20,42 @@ $(document).ready(function() {
 
    $("a").live('click', function(e) {
       var href = $(this).attr("href");
-      var re = href.match(/^\/?#\/([a-z_]+)\/?([a-z_]+)?$/);
+      var re = href.match(/^\/([a-z_]+)\/?([a-z_]+)?$/);
+      var re = href.match(/^\/([a-z_]+)\/?([a-z_]+)?\??(.*)$/);
       if (re != null) {
          e.preventDefault();
          var app = re[1];
          if (re[2] == null) {
-            if (undead.stackSize(app) == 0) {
-               undead.pushStack(app);
+            if (undead.stack.size(app) == 0) {
+               undead.stack.push(app);
             } else {
-               undead.focusApp(app);
+               undead.stack.focus(app);
             }
          } else {
             var action = re[2];
-            undead.pushStack(app, action);
+            var data = {};
+            if (re[3] != null) {
+               var pairs = re[3].split('&');
+               for (var i = 0; i < pairs.length; ++i) {
+                  var pair = pairs[i].split('=');
+                  if (pair[1] == null) {
+                     data[pair[0]] = '';
+                  } else {
+                     data[pair[0]] = pair[1];
+                  }
+               }
+            }
+            undead.stack.push(app, action, data);
          }
       }
    });
 
-   $("#logout").unbind('click').live('click',function() {
+   $("#logout").unbind('click').live('click',function(e) {
+      e.preventDefault();
       $.ajax({"data":{"app":"auth",
-                      "logout":""},
+                      "action":"logout"},
               "success":function(data) {
-                  window.location.reload();
+                  window.location = '/';
               }
       });
    });
@@ -49,15 +63,14 @@ $(document).ready(function() {
    $("#login-form").live('submit', function(e) {
       $.ajax({"data":{"app":"auth",
                       "username":$("#username").val(),
-                      "password":hex_sha1($("#password").val())},
+                      "password":undead.crypt.hash($("#password").val())},
               "success":function(data) {
                   if (data.status == "success") {
-                     undead.pushStack(data.app);
+                     undead.stack.push(data.app);
                      $.ajax({"data":{"app":"menu"},
                              "dataType":"html",
                              "success":function(data) {
                                  $("#sidenav").html(data);
-                                 undead.resetMenu();
                              }
                      });
                   } else {

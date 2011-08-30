@@ -1,1 +1,98 @@
-make a 60 second intro
+========================
+==     TODO FILE      ==
+========================
+Use this file to keep track of tasks
+that need to be done in the future.
+Keep them in bullet form and in the
+correct section.
+
+ZOMBIE PHP
+==========
+
+ - add session hijacking protection
+   - Check based on user-agent header?
+   - Add option to check based on IP
+   - Add option to check based on client public key
+   - Add session regenerate id
+   - Destroy cookie on logout
+
+ - Make sure session times out properly
+
+ - Move mobile detection to cookie/session
+   - allow for client to override mobile
+
+ - Need app for changing password
+
+ - Add a facebook/oauth/openid login app
+
+UNDEAD JS
+=========
+
+ - Allow for key/value pairs on url
+
+ - deal with latency (loading screen)
+
+ - create error/messages div on page, no more alerts
+
+ - Check verifyForm() for bugs
+
+FRONTEND
+========
+
+ - beautify mobile version
+   - dark template looks ugly in android
+   - wrong scale in mobile firefox
+   - needs testing in iphone, windows ce, etc
+
+ - add a footer
+   - copyright or something
+   - option to switch to full version if looking at mobile
+
+ - welcome page should be quick-start instructions
+
+TEMPLATING SYSTEM
+=================
+
+ - allow for overwriteing app/model (include auto backup?)
+
+ - needs additional error checking
+
+ - add more templates
+   - search engine template
+   - add postgres support
+
+ - Check mysql_frontend_form for bugs
+   - it was copied from mysql_crud and modified
+
+DATABASE
+========
+
+ - Create more DB classes
+   - Oracle would be nice
+   - Maybe some nosql: couch, mongo, hadoop?
+
+ - Update sql install files
+
+ - Add functions to encrypt/decrypt data for storage
+
+GENERAL
+=======
+
+ - Somebody please make a new logo
+
+ - organize everything to upgradable and not upgradable
+
+ - move config to top level for easier novice access?
+
+FUTURE FEATURES
+===============
+
+ - Testing platform
+
+ - Include ORM? I don't like them, but some people do.
+
+ - automagic upgrade zombie
+
+ - put a stack within a stack
+
+ - db migration

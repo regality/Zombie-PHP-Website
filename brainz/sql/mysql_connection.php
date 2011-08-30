@@ -36,7 +36,9 @@ class MySqlConnection extends SqlConnection {
          $query = preg_replace($match, "", $query);
          while (preg_match($match, $p_query, $matches, PREG_OFFSET_CAPTURE) > 0) {
              $len = strlen($key) + 1;
-             $value = stripslashes($value);
+             if (get_magic_quotes_gpc()) {
+                $value = stripslashes($value);
+             }
              if ($html_safe) {
                  $value = htmlspecialchars($value);
              }
@@ -71,6 +73,11 @@ class MySqlConnection extends SqlConnection {
 
    public function get_errors() {
      return $this->errors;
+   }
+
+   public function last_insert_id($table = null) {
+      // $table only their for postgres compatability
+      return mysql_insert_id();
    }
 
    public function begin() {

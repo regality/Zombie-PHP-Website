@@ -3,6 +3,7 @@
 require_once(__DIR__ . "/../util/error.php");
 require_once(__DIR__ . "/../util/util.php");
 require_once(__DIR__ . "/../util/autoload.php");
+require_once(__DIR__ . "/../util/mobile.php");
 
 abstract class App {
    protected $session;
@@ -18,6 +19,7 @@ abstract class App {
       $this->domain = $domain;
       $this->json = array();
       $this->is_page = false;
+      $this->is_mobile = is_mobile($_SERVER['HTTP_USER_AGENT']);
       if ($sess == null) {
          require_once($sess_file);
          $this->session = $sess_class::get_session();
@@ -30,8 +32,12 @@ abstract class App {
    public function render() {
       if ($this->format == 'json') {
          $errors = get_error_array();
-         if (is_array($errors) && isset($this->json['errors'])) {
-            $this->json['errors'] = array_merge($this->json['errors'], $errors);
+         if (is_array($errors)) {
+            if (isset($this->json['errors'])) {
+               $this->json['errors'] = array_merge($this->json['errors'], $errors);
+            } else {
+               $this->json['errors'] = $errors;
+            }
          }
          $this->render_json();
       } else {
@@ -79,7 +85,7 @@ abstract class App {
    }
 
    public function prepare($action, $request) {
-      if (is_null($action) && isset($_REQUEST['action'])) {
+      if (is_null($action) && !empty($_REQUEST['action'])) {
          $this->action = $_REQUEST['action'];
       } else if (is_null($action)) {
          $this->action = 'index';
@@ -103,6 +109,7 @@ abstract class App {
          $this->$run_func($this->request);
          $this->render();
       } else if (method_exists($this, 'default_run')) {
+         $this->view = 'default';
          $this->default_run($this->request);
          $this->render();
       } else {
