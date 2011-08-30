@@ -1,7 +1,7 @@
 <?php
 
 function __autoload($class) {
-   require('util.php');
+   require_once('util.php');
    include(__DIR__ . '/../config.php');
    if (substr($class, -5) == 'Model') {
       $slug = class_to_underscore(substr($class, strlen($class), -5)); 

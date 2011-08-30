@@ -1,7 +1,7 @@
 <?php
 
 require("../brainz/config.php");
-require("../brainz/util/util.php");
+require_once("../brainz/util/util.php");
 
 if (isset($_GET['app'])) {
    // sanitize the app name: only letters, numbers, underscores, and slashes
